@@ -10,14 +10,14 @@
 
 // Calcul des 19 coefficients
 
-void computeCoefs(Triangle triangle, float *f, float *dxf, float *dyf, Coefs *coefs)
+void computeCoefs(Triangle *triangle, float *f, float *dxf, float *dyf, Coefs *coefs)
 {
     size_t j, k;
     int edge_i, edge_j, edge_k; // edge_j;
 
     for (size_t i = 0; i < 3; i++) // compute a
     {
-        edge_i = triangle.edges[i] - 1;
+        edge_i = triangle->edges[i] - 1;
         coefs->a[i] = 0.;
         coefs->a[i] = f[edge_i];
     }
@@ -25,20 +25,20 @@ void computeCoefs(Triangle triangle, float *f, float *dxf, float *dyf, Coefs *co
     for (size_t j = 0; j < 3; j++) // compute p
     {
         k = (j + 1) % 3;
-        edge_j = triangle.edges[j] - 1;
+        edge_j = triangle->edges[j] - 1;
         coefs->p[j] = 0.;
         coefs->p[j] =
-            dxf[edge_j] * (triangle.points[k].x - triangle.points[j].x) + dyf[edge_j] * (triangle.points[k].y - triangle.points[j].y);
+            dxf[edge_j] * (triangle->points[k].x - triangle->points[j].x) + dyf[edge_j] * (triangle->points[k].y - triangle->points[j].y);
     }
 
     for (size_t i = 0; i < 3; i++) // compute q
     {
         j = (i + 1) % 3;
         k = (i + 2) % 3;
-        edge_k = triangle.edges[k] - 1;
+        edge_k = triangle->edges[k] - 1;
         coefs->q[k] = 0.;
         coefs->q[k] =
-            dxf[edge_k] * (triangle.points[j].x - triangle.points[k].x) + dyf[edge_k] * (triangle.points[j].y - triangle.points[k].y);
+            dxf[edge_k] * (triangle->points[j].x - triangle->points[k].x) + dyf[edge_k] * (triangle->points[j].y - triangle->points[k].y);
     }
 
     for (size_t i = 0; i < 3; i++) // compute b
@@ -65,10 +65,10 @@ void computeCoefs(Triangle triangle, float *f, float *dxf, float *dyf, Coefs *co
         k = (i + 2) % 3;
         coefs->u[i] = 0.;
         coefs->u[i] = 2. *
-                      ((triangle.points[k].x - triangle.omega.x) * (triangle.points[k].x - triangle.points[j].x) +
-                       (triangle.points[k].y - triangle.omega.y) * (triangle.points[k].y - triangle.points[j].y)) /
-                      ((triangle.points[k].x - triangle.points[j].x) * (triangle.points[k].x - triangle.points[j].x) +
-                       (triangle.points[k].y - triangle.points[j].y) * (triangle.points[k].y - triangle.points[j].y));
+                      ((triangle->points[k].x - triangle->omega.x) * (triangle->points[k].x - triangle->points[j].x) +
+                       (triangle->points[k].y - triangle->omega.y) * (triangle->points[k].y - triangle->points[j].y)) /
+                      ((triangle->points[k].x - triangle->points[j].x) * (triangle->points[k].x - triangle->points[j].x) +
+                       (triangle->points[k].y - triangle->points[j].y) * (triangle->points[k].y - triangle->points[j].y));
     }
 
     for (size_t i = 0; i < 3; i++) // compute g

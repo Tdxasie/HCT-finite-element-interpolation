@@ -15,8 +15,8 @@ tri = [ size(tri) 0; tri];
 
 writematrix(tri, 'tri.txt', 'Delimiter', 'tab');
 
-!gcc -o computer.exe main.c io.c computing.c buildmesh.c interpolate.c -lm
-!computer.exe
+!gcc -o program.exe src\*.c -lm
+!program.exe
 
 figure(2);
 data = load('plot_f.txt');

@@ -45,7 +45,7 @@ void processIpoint(Ipoint *ipoint, Triangle *triangles, size_t nbTri)
 {
     findTri(ipoint, triangles, nbTri);
 
-    findMicroTri(ipoint, triangles, nbTri);
+    findMicroTri(ipoint);
 }
 
 void findTri(Ipoint *ipoint, Triangle *triangles, size_t nbTri)
