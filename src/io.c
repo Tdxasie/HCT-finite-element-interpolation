@@ -28,8 +28,6 @@ int lecHctr(char *filename, size_t *nbPoints, Point **points)
 
     for (size_t i = 0; i < *nbPoints; i++)
     {
-        (*points)[i].x = 0.;
-        (*points)[i].y = 0.;
         fscanf(fichier, "%lf %lf", &(*points)[i].x, &(*points)[i].y);
     }
 
@@ -78,8 +76,6 @@ int lecTriang(char *filename, Point *points, size_t *nbTriangles, Triangle **tri
             omega.x += x;
             omega.y += y;
 
-            (*triangles)[i].points[j].x = 0.;
-            (*triangles)[i].points[j].y = 0.;
             (*triangles)[i].points[j].x = x;
             (*triangles)[i].points[j].y = y;
         }

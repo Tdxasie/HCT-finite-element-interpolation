@@ -18,7 +18,6 @@ void computeCoefs(Triangle *triangle, float *f, float *dxf, float *dyf, Coefs *c
     for (size_t i = 0; i < 3; i++) // compute a
     {
         edge_i = triangle->edges[i] - 1;
-        coefs->a[i] = 0.;
         coefs->a[i] = f[edge_i];
     }
 
@@ -26,7 +25,6 @@ void computeCoefs(Triangle *triangle, float *f, float *dxf, float *dyf, Coefs *c
     {
         k = (j + 1) % 3;
         edge_j = triangle->edges[j] - 1;
-        coefs->p[j] = 0.;
         coefs->p[j] =
             dxf[edge_j] * (triangle->points[k].x - triangle->points[j].x) + dyf[edge_j] * (triangle->points[k].y - triangle->points[j].y);
     }
@@ -36,26 +34,22 @@ void computeCoefs(Triangle *triangle, float *f, float *dxf, float *dyf, Coefs *c
         j = (i + 1) % 3;
         k = (i + 2) % 3;
         edge_k = triangle->edges[k] - 1;
-        coefs->q[k] = 0.;
         coefs->q[k] =
             dxf[edge_k] * (triangle->points[j].x - triangle->points[k].x) + dyf[edge_k] * (triangle->points[j].y - triangle->points[k].y);
     }
 
     for (size_t i = 0; i < 3; i++) // compute b
     {
-        coefs->b[i] = 0.;
         coefs->b[i] = coefs->a[i] + coefs->p[i] / 3.;
     }
 
     for (size_t i = 0; i < 3; i++) // compute c
     {
-        coefs->c[i] = 0.;
         coefs->c[i] = coefs->a[i] + coefs->q[i] / 3.;
     }
 
     for (size_t i = 0; i < 3; i++) // compute d
     {
-        coefs->d[i] = 0.;
         coefs->d[i] = (coefs->a[i] + coefs->b[i] + coefs->c[i]) / 3.;
     }
 
@@ -63,7 +57,6 @@ void computeCoefs(Triangle *triangle, float *f, float *dxf, float *dyf, Coefs *c
     {
         j = (i + 1) % 3;
         k = (i + 2) % 3;
-        coefs->u[i] = 0.;
         coefs->u[i] = 2. *
                       ((triangle->points[k].x - triangle->omega.x) * (triangle->points[k].x - triangle->points[j].x) +
                        (triangle->points[k].y - triangle->omega.y) * (triangle->points[k].y - triangle->points[j].y)) /
@@ -75,7 +68,6 @@ void computeCoefs(Triangle *triangle, float *f, float *dxf, float *dyf, Coefs *c
     {
         j = (i + 1) % 3;
         k = (i + 2) % 3;
-        coefs->g[i] = 0.;
         coefs->g[i] = (2. * (coefs->d[k] + coefs->d[j]) + (4. - 3. * coefs->u[i]) * coefs->c[k] + (coefs->u[i] - 2.) * coefs->a[k] +
                        (3. * coefs->u[i] - 2.) * coefs->b[j] - coefs->u[i] * coefs->a[j]) /
                       4.;
@@ -85,7 +77,6 @@ void computeCoefs(Triangle *triangle, float *f, float *dxf, float *dyf, Coefs *c
     {
         j = (i + 1) % 3;
         k = (i + 2) % 3;
-        coefs->e[k] = 0.;
         coefs->e[k] = (coefs->d[k] + coefs->g[i] + coefs->g[j]) / 3.;
     }
 }
